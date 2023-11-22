@@ -28,40 +28,31 @@ export function createElement(name, props = {}, ...children) {
 }
 
 /**
- * Функция для образования множественного числа в русском языке
- * @param number {number} Число
- * @param forms {Array} Формы слова для множественного числа (один, несколько, много)
- * @returns {string} Множественное число
+ * Returns the appropriate plural form for the given count.
+ *
+ * @param {number} count The count to determine the plural form.
+ * @return {string} The plural form of the count.
  */
-const pluralize = (number, forms) => {
-  if (number === 0) {
-    return forms[2];
-  }
+function pluralize(count) {
+  const pluralRules = new Intl.PluralRules('ru-RU');
+  const pluralCategory = pluralRules.select(count);
 
-  const lastDigit = number % 10;
-  const lastTwoDigits = number % 100;
+  const forms = {
+    one: 'раз',
+    few: 'раза',
+    many: 'раз',
+    other: 'раз',
+  };
 
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
-    return forms[2];
-  }
-
-  if (lastDigit === 1) {
-    return forms[0];
-  }
-
-  if (lastDigit >= 2 && lastDigit <= 4) {
-    return forms[1];
-  }
-
-  return forms[2];
+  return forms[pluralCategory];
 }
 
 /**
- * Pluralizes the counter value and returns a string.
+ * Formats the count of selections.
  *
- * @param {number} counter - The counter value to pluralize.
- * @return {string} - The pluralized string.
+ * @param {number} count The count of selections.
+ * @return {string} The formatted count of selections.
  */
-export const pluralizeCounter = (counter) => {
-  return ' | Выделяли ' + `${counter} ` + pluralize(counter, ['раз', 'раза', 'раз'])
+export function formatCountOfSelections(count) {
+  return ' | Выделяли ' + `${count} ` + pluralize(count);
 }

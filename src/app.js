@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import { pluralizeCounter } from './utils';
+import { formatCountOfSelections } from './utils';
 
 /**
  * Приложение
@@ -22,14 +22,14 @@ function App({store}) {
       <div className='App-center'>
         <div className='List'>
           {list.map(item => {
-            const selectedCount = item.selectedCount ? pluralizeCounter(item.selectedCount) : '';
+            const formattedCountOfSelections = item.selectedCount ? formatCountOfSelections(item.selectedCount) : '';
 
             return (
               <div key={item.code} className='List-item'>
                 <div className={'Item' + (item.selected ? ' Item_selected' : '')}
                      onClick={() => store.selectItem(item.code)}>
                   <div className='Item-code'>{item.code}</div>
-                  <div className='Item-title'>{item.title + selectedCount}</div>
+                  <div className='Item-title'>{item.title + formattedCountOfSelections}</div>
                   <div className='Item-actions'>
                     <button onClick={() => store.deleteItem(item.code)}>
                       Удалить
