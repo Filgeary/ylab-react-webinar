@@ -1,3 +1,5 @@
+import { COUNT_PLURAL_FORM } from "./const";
+
 const propNames = new Set(['id', 'className', 'textContent', 'onclick']);
 
 /**
@@ -28,23 +30,17 @@ export function createElement(name, props = {}, ...children) {
 }
 
 /**
- * Returns the appropriate plural form for the given count.
+ * Pluralize a word based on the count using a forms map.
  *
- * @param {number} count The count to determine the plural form.
- * @return {string} The plural form of the count.
+ * @param {number} count - The count to determine the plural form.
+ * @param {object} formsMap - The map of plural forms.
+ * @return {string} The plural form of the word.
  */
-function pluralize(count) {
+function pluralize(count, formsMap) {
   const pluralRules = new Intl.PluralRules('ru-RU');
   const pluralCategory = pluralRules.select(count);
 
-  const forms = {
-    one: 'раз',
-    few: 'раза',
-    many: 'раз',
-    other: 'раз',
-  };
-
-  return forms[pluralCategory];
+  return formsMap[pluralCategory];
 }
 
 /**
@@ -54,5 +50,5 @@ function pluralize(count) {
  * @return {string} The formatted count of selections.
  */
 export function formatCountOfSelections(count) {
-  return ' | Выделяли ' + `${count} ` + pluralize(count);
+  return ' | Выделяли ' + `${count} ` + pluralize(count, COUNT_PLURAL_FORM);
 }
