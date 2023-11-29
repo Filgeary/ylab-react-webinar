@@ -1,0 +1,7 @@
+.CartInfo {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px dashed #ccc;
+}

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import CartInfo from './components/cart-info';
 import Head from './components/head';
 import List from './components/list';
 import PageLayout from './components/page-layout';
@@ -12,13 +13,12 @@ import PageLayout from './components/page-layout';
 function App({ store }) {
   const list = store.getState().list;
   const cart = store.getState().cart;
-  console.log('🚀 => App => cart:', cart);
 
   const handleAddItem = item => {
     store.addItemToCart(item);
-    console.log('🚀 => handleAddItem => item:', item);
   };
 
+  // TODO: make handleRemoveItem
   // const handleRemoveItem = code => {
   //   console.log('handleRemoveItem', code);
   // };
@@ -26,6 +26,7 @@ function App({ store }) {
   return (
     <PageLayout>
       <Head title='Магазин' />
+      <CartInfo cart={cart} />
       <List
         list={list}
         onAddItem={handleAddItem}
