@@ -1,41 +1,31 @@
-import React, {useCallback} from 'react';
-import List from "./components/list";
-import Controls from "./components/controls";
-import Head from "./components/head";
-import PageLayout from "./components/page-layout";
+import PropTypes from 'prop-types';
+import React from 'react';
+import Head from './components/head';
+import List from './components/list';
+import PageLayout from './components/page-layout';
 
 /**
  * Приложение
- * @param store {Store} Хранилище состояния приложения
+ * @param {object} store  Хранилище состояния приложения
  * @returns {React.ReactElement}
  */
-function App({store}) {
-
+function App({ store }) {
   const list = store.getState().list;
-
-  const callbacks = {
-    onDeleteItem: useCallback((code) => {
-      store.deleteItem(code);
-    }, [store]),
-
-    onSelectItem: useCallback((code) => {
-      store.selectItem(code);
-    }, [store]),
-
-    onAddItem: useCallback(() => {
-      store.addItem();
-    }, [store])
-  }
 
   return (
     <PageLayout>
-      <Head title='Приложение на чистом JS'/>
-      <Controls onAdd={callbacks.onAddItem}/>
-      <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}
-            onSelectItem={callbacks.onSelectItem}/>
+      <Head title='Магазин' />
+      <List list={list} />
     </PageLayout>
   );
 }
+
+App.propTypes = {
+  store: PropTypes.shape({
+    getState: PropTypes.func.isRequired,
+    setState: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default App;
