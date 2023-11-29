@@ -3,7 +3,7 @@ import React from 'react';
 import Item from '../item';
 import './style.css';
 
-function List({ list }) {
+function List({ list, onAddItem, onRemoveItem }) {
   return (
     <div className='List'>
       {list.map(item => (
@@ -11,7 +11,11 @@ function List({ list }) {
           key={item.code}
           className='List-item'
         >
-          <Item item={item} />
+          <Item
+            item={item}
+            onAddItem={onAddItem}
+            onRemoveItem={onRemoveItem}
+          />
         </div>
       ))}
     </div>
@@ -26,6 +30,8 @@ List.propTypes = {
       price: PropTypes.number.isRequired,
     }),
   ).isRequired,
+  onAddItem: PropTypes.func,
+  onRemoveItem: PropTypes.func,
 };
 
 export default React.memo(List);

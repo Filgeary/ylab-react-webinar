@@ -11,11 +11,25 @@ import PageLayout from './components/page-layout';
  */
 function App({ store }) {
   const list = store.getState().list;
+  const cart = store.getState().cart;
+  console.log('🚀 => App => cart:', cart);
+
+  const handleAddItem = item => {
+    store.addItemToCart(item);
+    console.log('🚀 => handleAddItem => item:', item);
+  };
+
+  // const handleRemoveItem = code => {
+  //   console.log('handleRemoveItem', code);
+  // };
 
   return (
     <PageLayout>
       <Head title='Магазин' />
-      <List list={list} />
+      <List
+        list={list}
+        onAddItem={handleAddItem}
+      />
     </PageLayout>
   );
 }
@@ -25,6 +39,7 @@ App.propTypes = {
     getState: PropTypes.func.isRequired,
     setState: PropTypes.func.isRequired,
     subscribe: PropTypes.func.isRequired,
+    addItemToCart: PropTypes.func.isRequired,
   }).isRequired,
 };
 

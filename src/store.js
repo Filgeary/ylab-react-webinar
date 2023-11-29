@@ -37,6 +37,17 @@ class Store {
     // Вызываем всех слушателей
     for (const listener of this.listeners) listener();
   }
+
+  /**
+   * Adds an item to the cart.
+   * @param {object} item - The item to be added to the cart.
+   */
+  addItemToCart(item) {
+    this.setState({
+      ...this.state,
+      cart: [...this.state.cart, item],
+    });
+  }
 }
 
 export default Store;
