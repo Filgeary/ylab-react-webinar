@@ -6,7 +6,7 @@ import { formatPrice, groupBy, plural } from '../../utils';
 import Controls from '../controls';
 import './style.css';
 
-function CartInfo({ cart }) {
+function CartInfo({ cart, onGoTo }) {
   const cn = bem('CartInfo');
 
   const amountOfUniqueItems = Object.keys(groupBy(cart, 'code')).length;
@@ -22,7 +22,7 @@ function CartInfo({ cart }) {
 
       <span>В корзине:</span>
       <strong>{cartSummary}</strong>
-      <Controls onGoTo={() => console.log('open Modal')} />
+      <Controls onGoTo={onGoTo} />
     </section>
   );
 }
@@ -35,6 +35,7 @@ CartInfo.propTypes = {
       price: PropTypes.number.isRequired,
     }),
   ).isRequired,
+  onGoTo: PropTypes.func.isRequired,
 };
 
-export default CartInfo;
+export default React.memo(CartInfo);

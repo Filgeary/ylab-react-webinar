@@ -12,7 +12,9 @@ function Item(props) {
     <div className={cn()}>
       <div className={cn('code')}>{props.item.code}</div>
       <div className={cn('title')}>{props.item.title}</div>
-      <div className={cn('price')}>{formatPrice(props.item.price)}</div>
+      <span className={cn('price')}>{formatPrice(props.item.price)}</span>
+      {props.isCartMode && <span className={cn('quantity')}>{props.item.quantity} шт</span>}
+
       {
         <Controls
           onAddItem={props.onAddItem && (() => props.onAddItem(props.item))}
@@ -28,9 +30,11 @@ Item.propTypes = {
     code: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    quantity: PropTypes.number,
   }).isRequired,
   onAddItem: PropTypes.func,
   onRemoveItem: PropTypes.func,
+  isCartMode: PropTypes.bool,
 };
 
 export default React.memo(Item);

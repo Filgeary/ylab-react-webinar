@@ -1,0 +1,10 @@
+.CartModal-info {
+  display: flex;
+  height: 60px;
+  text-align: center;
+  border-bottom: 1px dashed #ccc;
+}
+
+.CartModal-description {
+  margin: auto;
+}

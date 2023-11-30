@@ -48,6 +48,17 @@ class Store {
       cart: [...this.state.cart, item],
     });
   }
+
+  /**
+   * Remove an item from the cart based on the provided code.
+   * @param {number} code - The code of the item to be removed.
+   */
+  removeItemFromCart(code) {
+    this.setState({
+      ...this.state,
+      cart: this.state.cart.filter(item => item.code !== code),
+    });
+  }
 }
 
 export default Store;

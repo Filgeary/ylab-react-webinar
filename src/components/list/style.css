@@ -1,7 +1,19 @@
 .List {
-
+  /* styles */
 }
 
 .List-item {
   border-bottom: 1px dashed #ccc;
+}
+
+.List-total {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10%;
+}
+
+.List-total strong {
+  min-width: 10%;
+  padding: 20px 20px 20px 10px;
+  text-align: right;
 }

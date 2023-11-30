@@ -14,6 +14,13 @@
 }
 
 .Item-price {
+  min-width: 10%;
+  padding: 20px 10px;
+  text-align: right;
+}
+
+.Item-quantity {
+  min-width: 10%;
   padding: 20px 10px;
   text-align: right;
 }
