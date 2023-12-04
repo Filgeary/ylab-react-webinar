@@ -20,8 +20,8 @@ function CartInfo({ cart, onGoTo }) {
     <section className={cn()}>
       <h2 className='visually-hidden'>Текущая информация корзины</h2>
 
-      <span>В корзине:</span>
-      <strong>{cartSummary}</strong>
+      <span className={cn('info')}>В корзине:</span>
+      <strong className={cn('summary')}>{cartSummary}</strong>
       <Controls onGoTo={onGoTo} />
     </section>
   );

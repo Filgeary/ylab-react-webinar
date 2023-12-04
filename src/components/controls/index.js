@@ -7,7 +7,14 @@ function Controls({ onAddItem, onRemoveItem, onGoTo, onClose }) {
     <div className='Controls'>
       {onAddItem && <button onClick={() => onAddItem()}>Добавить</button>}
       {onRemoveItem && <button onClick={() => onRemoveItem()}>Удалить</button>}
-      {onGoTo && <button onClick={() => onGoTo()}>Перейти</button>}
+      {onGoTo && (
+        <button
+          style={{ minWidth: '80px' }}
+          onClick={() => onGoTo()}
+        >
+          Перейти
+        </button>
+      )}
       {onClose && <button onClick={() => onClose()}>Закрыть</button>}
     </div>
   );

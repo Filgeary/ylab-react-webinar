@@ -54,7 +54,7 @@ function Modal({ title, isOpen, onClose, children }) {
         >
           <div className={cn('content')}>
             <header className={cn('header')}>
-              <h2>{title}</h2>
+              <h2 className={cn('title')}>{title}</h2>
               <Controls onClose={onClose} />
             </header>
 

@@ -1,8 +1,13 @@
 body {
   margin: 0;
   padding: 0;
+  color: #000;
+  font-family: Arial;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
   background: #535353;
-  font-family: sans-serif;
 }
 
 /* helper class */
@@ -23,7 +28,8 @@ input[type='radio'].visually-hidden {
 }
 
 button {
-  min-width: 75px;
+  min-width: 76px;
+  font-size: 13px;
 }
 
 .PageLayout {

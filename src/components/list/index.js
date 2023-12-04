@@ -38,7 +38,7 @@ function List({ list, onAddItem, onRemoveItem, isCartMode }) {
 
       {isCartMode && visibleList.length > 0 && (
         <div className={cn('total')}>
-          <strong>Итого:</strong>
+          <strong>Итого</strong>
           <strong>
             {formatPrice(visibleList.reduce((acc, item) => acc + item.price * item.quantity, 0))}
           </strong>
