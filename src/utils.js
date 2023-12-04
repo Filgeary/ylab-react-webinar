@@ -23,25 +23,6 @@ export function formatPrice(price, locale = 'ru-RU') {
 }
 
 /**
- * Groups an array of objects by the value of a specified property.
- *
- * @param {Array} array - The input array to be grouped.
- * @param {string} property - The property to group the array by.
- * @return {object} - An object where each property is a unique value of the specified property,
- *                    and the value is an array of objects with that property value.
- */
-export function groupBy(array, property) {
-  return array.reduce((acc, obj) => {
-    const key = obj[property];
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(obj);
-    return acc;
-  }, {});
-}
-
-/**
  * Плюрализация
  * Возвращает вариант с учётом правил множественного числа под указанную локаль
  * @param value {Number} Число, под которое выбирается вариант формы.

@@ -13,11 +13,13 @@ function Item(props) {
       <div className={cn('code')}>{props.item.code}</div>
       <div className={cn('title')}>{props.item.title}</div>
       <span className={cn('price')}>{formatPrice(props.item.price)}</span>
-      {props.isCartMode && <span className={cn('quantity')}>{props.item.quantity} шт</span>}
+      {props.item.quantity > 0 ? (
+        <span className={cn('quantity')}>{props.item.quantity} шт</span>
+      ) : null}
 
       {
         <Controls
-          onAddItem={props.onAddItem && (() => props.onAddItem(props.item))}
+          onAddItem={props.onAddItem && (() => props.onAddItem(props.item.code))}
           onRemoveItem={props.onRemoveItem && (() => props.onRemoveItem(props.item.code))}
         />
       }
@@ -34,7 +36,6 @@ Item.propTypes = {
   }).isRequired,
   onAddItem: PropTypes.func,
   onRemoveItem: PropTypes.func,
-  isCartMode: PropTypes.bool,
 };
 
 export default React.memo(Item);

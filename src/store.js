@@ -38,24 +38,37 @@ class Store {
     for (const listener of this.listeners) listener();
   }
 
-  /**
-   * Adds an item to the cart.
-   * @param {object} item - The item to be added to the cart.
-   */
-  addItemToCart(item) {
-    this.setState({
-      ...this.state,
-      cart: [...this.state.cart, item],
-    });
+  addItemToCart(code) {
+    const foundItemInList = this.state.list.find(item => item.code === code);
+    const foundItemInCart = this.state.cart.find(item => item?.code === code);
+
+    if (foundItemInCart) {
+      this.setState({
+        ...this.state,
+        cart: this.state.cart.map(item => {
+          if (item?.code === code) {
+            return { ...item, quantity: item.quantity + 1 };
+          } else {
+            return item;
+          }
+        }),
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        cart: [...this.state.cart, { ...foundItemInList, quantity: 1 }],
+      });
+    }
+
+    this.state.total += foundItemInList.price;
   }
 
-  /**
-   * Remove an item from the cart based on the provided code.
-   * @param {number} code - The code of the item to be removed.
-   */
   removeItemFromCart(code) {
+    const foundItemInCart = this.state.cart.find(item => item.code === code);
+
     this.setState({
       ...this.state,
+      total: this.state.total - foundItemInCart.price * foundItemInCart.quantity,
       cart: this.state.cart.filter(item => item.code !== code),
     });
   }

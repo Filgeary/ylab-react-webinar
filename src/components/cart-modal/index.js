@@ -5,7 +5,7 @@ import List from '../list';
 import Modal from '../modal';
 import './style.css';
 
-function CartModal({ open, cartData, onCloseModal, onRemoveItem }) {
+function CartModal({ open, cartData, totalPrice, onCloseModal, onRemoveItem }) {
   const cn = bem('CartModal');
 
   return (
@@ -20,6 +20,7 @@ function CartModal({ open, cartData, onCloseModal, onRemoveItem }) {
 
       <List
         list={cartData}
+        totalPrice={totalPrice}
         onRemoveItem={onRemoveItem}
         isCartMode={true}
       />
@@ -36,6 +37,7 @@ CartModal.propTypes = {
       price: PropTypes.number.isRequired,
     }),
   ).isRequired,
+  totalPrice: PropTypes.number.isRequired,
   onCloseModal: PropTypes.func.isRequired,
   onRemoveItem: PropTypes.func.isRequired,
 };

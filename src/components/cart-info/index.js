@@ -2,15 +2,14 @@ import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { COUNT_GOODS_PLURAL_FORMS } from '../../const';
-import { formatPrice, groupBy, plural } from '../../utils';
+import { formatPrice, plural } from '../../utils';
 import Controls from '../controls';
 import './style.css';
 
-function CartInfo({ cart, onGoTo }) {
+function CartInfo({ cart, totalPrice, onGoTo }) {
   const cn = bem('CartInfo');
 
-  const amountOfUniqueItems = Object.keys(groupBy(cart, 'code')).length;
-  const totalPrice = cart.reduce((acc, item) => acc + item.price, 0);
+  const amountOfUniqueItems = cart.length;
   // prettier-ignore
   const cartSummary = cart.length
     ? `${amountOfUniqueItems} ${plural(amountOfUniqueItems, COUNT_GOODS_PLURAL_FORMS)} / ${formatPrice(totalPrice)}`
@@ -35,6 +34,7 @@ CartInfo.propTypes = {
       price: PropTypes.number.isRequired,
     }),
   ).isRequired,
+  totalPrice: PropTypes.number.isRequired,
   onGoTo: PropTypes.func.isRequired,
 };
 

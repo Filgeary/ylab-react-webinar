@@ -15,9 +15,10 @@ function App({ store }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const list = store.getState().list;
   const cart = store.getState().cart;
+  const total = store.getState().total;
 
   const callbacks = {
-    handleAddItem: useCallback(item => store.addItemToCart(item), [store]),
+    handleAddItem: useCallback(code => store.addItemToCart(code), [store]),
     handleRemoveItem: useCallback(code => store.removeItemFromCart(code), [store]),
     handleOpenModal: useCallback(() => setIsOpenModal(true), []),
     handleCloseModal: useCallback(() => setIsOpenModal(false), []),
@@ -28,6 +29,7 @@ function App({ store }) {
       <Head title='Магазин' />
       <CartInfo
         cart={cart}
+        totalPrice={total}
         onGoTo={callbacks.handleOpenModal}
       />
       <List
@@ -39,6 +41,7 @@ function App({ store }) {
         <CartModal
           open={isOpenModal}
           cartData={cart}
+          totalPrice={total}
           onCloseModal={callbacks.handleCloseModal}
           onRemoveItem={callbacks.handleRemoveItem}
         />
