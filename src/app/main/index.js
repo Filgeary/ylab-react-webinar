@@ -20,6 +20,9 @@ function Main() {
     list: state.catalog.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    currentPage: state.catalog.currentPage,
+    size: state.catalog.limit,
+    total: state.catalog.total,
   }));
 
   const callbacks = {
@@ -27,6 +30,7 @@ function Main() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
+    loadMorePerPage: useCallback(pageCount => store.actions.catalog.load(pageCount - 1), [store]),
   };
 
   const renders = {
@@ -56,10 +60,10 @@ function Main() {
         renderItem={renders.item}
       />
       <Pagination
-        currentPage={5}
-        size={10}
-        total={90}
-        onClick={console.log}
+        currentPage={select.currentPage + 1}
+        size={select.size}
+        total={select.total}
+        onClick={callbacks.loadMorePerPage}
       />
     </PageLayout>
   );
