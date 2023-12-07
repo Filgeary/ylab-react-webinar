@@ -1,9 +1,8 @@
-import { responseProduct } from '../_fixtures/responseProduct';
-import PageLayout from '../components/page-layout';
-import ProductCard from '../components/product-card';
+import { Route, Routes } from 'react-router-dom';
 import useSelector from '../store/use-selector';
 import Basket from './basket';
 import Main from './main';
+import Product from './product';
 
 /**
  * Приложение
@@ -14,13 +13,21 @@ function App() {
 
   return (
     <>
-      <PageLayout>
-        <ProductCard
-          item={responseProduct.result}
-          onAddProduct={console.log}
+      <Routes>
+        <Route
+          path='/'
+          element={<Main />}
         />
-      </PageLayout>
-      <Main />
+        <Route
+          path='/product/:id'
+          element={<Product />}
+        />
+        <Route
+          path='*'
+          element={<p>Страница не найдена</p>}
+        />
+      </Routes>
+
       {activeModal === 'basket' && <Basket />}
     </>
   );

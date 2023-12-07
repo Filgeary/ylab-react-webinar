@@ -14,6 +14,7 @@ class Catalog extends StoreModule {
       currentPage: 0,
       limit: PAGE_LIMIT,
       total: 0,
+      product: {},
     };
   }
 
@@ -39,6 +40,28 @@ class Catalog extends StoreModule {
         total: json.result.count,
       },
       'Загружены товары из АПИ',
+    );
+  }
+
+  async fetchProductById(id) {
+    const response = await fetch(
+      // prettier-ignore
+      `/api/v1/articles/${id}?fields=_id,title,description,price,edition,madeIn(title,code),category(title)`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Language': 'ru',
+        },
+      },
+    );
+    const json = await response.json();
+
+    this.setState(
+      {
+        ...this.getState(),
+        product: json.result,
+      },
+      `Загружен товар по id ${id} из АПИ`,
     );
   }
 }
