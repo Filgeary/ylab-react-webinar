@@ -24,3 +24,8 @@ GET http://example.front.ylab.io/api/v1/articles/64845d46f4686f573a2287e3
 # Про формат fields смотри http://query.rest
 
 GET http://example.front.ylab.io/api/v1/articles/64845d46f4686f573a2287e3?fields=*,madeIn(title,code),category(title)
+
+###
+# custom request
+
+GET http://example.front.ylab.io/api/v1/articles/64845d46f4686f573a2287e3?fields=_id,title,description,price,edition,madeIn(title,code),category(title)
