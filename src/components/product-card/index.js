@@ -1,11 +1,14 @@
 import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useIntl } from '../../context/intl-context';
 import { numberFormat } from '../../utils';
 import './style.css';
 
 const ProductCard = ({ item, onAddProduct }) => {
+  const { t } = useIntl();
   const cn = bem('ProductCard');
+
   const { _id, description, price, madeIn, edition, category } = item ?? {};
   const { title: madeInTitle, code } = madeIn ?? {};
   const { title: categoryTitle } = category ?? {};
@@ -33,7 +36,7 @@ const ProductCard = ({ item, onAddProduct }) => {
         className={cn('button')}
         onClick={() => onAddProduct(_id)}
       >
-        Добавить
+        {t('Add')}
       </button>
     </article>
   );

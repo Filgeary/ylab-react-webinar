@@ -1,21 +1,24 @@
-import {memo} from "react";
 import PropTypes from 'prop-types';
+import { memo } from 'react';
+import { useIntl } from '../../context/intl-context';
 import './style.css';
 
-function Controls({onAdd}) {
+function Controls({ onAdd }) {
+  const { t } = useIntl();
+
   return (
     <div className='Controls'>
-      <button onClick={() => onAdd()}>Добавить</button>
+      <button onClick={() => onAdd()}>{t('Add')}</button>
     </div>
-  )
+  );
 }
 
 Controls.propTypes = {
-  onAdd: PropTypes.func
+  onAdd: PropTypes.func,
 };
 
 Controls.defaultProps = {
-  onAdd: () => {}
-}
+  onAdd: () => {},
+};
 
 export default memo(Controls);

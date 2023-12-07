@@ -2,10 +2,12 @@ import { cn as bem } from '@bem-react/classname';
 import { default as PropTypes, default as propTypes } from 'prop-types';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import { useIntl } from '../../context/intl-context';
 import { numberFormat } from '../../utils';
 import './style.css';
 
 function ItemBasket(props) {
+  const { t } = useIntl();
   const cn = bem('ItemBasket');
 
   const callbacks = {
@@ -26,7 +28,7 @@ function ItemBasket(props) {
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
         <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
         <div className={cn('cell')}>
-          <button onClick={callbacks.onRemove}>Удалить</button>
+          <button onClick={callbacks.onRemove}>{t('Remove')}</button>
         </div>
       </div>
     </div>

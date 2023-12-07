@@ -5,11 +5,13 @@ import Head from '../../components/head';
 import Navigation from '../../components/navigation';
 import PageLayout from '../../components/page-layout';
 import ProductCard from '../../components/product-card';
+import { useIntl } from '../../context/intl-context';
 import useSelector from '../../store/use-selector';
 import useStore from '../../store/use-store';
 
 function Product() {
   const store = useStore();
+  const { locale, setLocale } = useIntl();
   const { id } = useParams();
 
   const select = useSelector(state => ({
@@ -35,7 +37,11 @@ function Product() {
     <PageLayout>
       {Object.keys(select.product).length > 0 && (
         <>
-          <Head title={select.product.title} />
+          <Head
+            title={select.product.title}
+            onChangeLocale={setLocale}
+            defaultLocale={locale}
+          />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Navigation />
             <BasketTool

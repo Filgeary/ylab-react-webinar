@@ -2,10 +2,12 @@ import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import { useIntl } from '../../context/intl-context';
 import { numberFormat } from '../../utils';
 import './style.css';
 
 function Item(props) {
+  const { t } = useIntl();
   const cn = bem('Item');
 
   const callbacks = {
@@ -19,7 +21,7 @@ function Item(props) {
       </div>
       <div className={cn('actions')}>
         <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
-        <button onClick={callbacks.onAdd}>Добавить</button>
+        <button onClick={callbacks.onAdd}>{t('Add')}</button>
       </div>
     </div>
   );

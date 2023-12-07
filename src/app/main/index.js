@@ -6,11 +6,13 @@ import List from '../../components/list';
 import Navigation from '../../components/navigation';
 import PageLayout from '../../components/page-layout';
 import Pagination from '../../components/pagination';
+import { useIntl } from '../../context/intl-context';
 import useSelector from '../../store/use-selector';
 import useStore from '../../store/use-store';
 
 function Main() {
   const store = useStore();
+  const { locale, setLocale, t } = useIntl();
 
   useEffect(() => {
     store.actions.catalog.load();
@@ -50,7 +52,11 @@ function Main() {
 
   return (
     <PageLayout>
-      <Head title='Магазин' />
+      <Head
+        title={t('Store')}
+        defaultLocale={locale}
+        onChangeLocale={setLocale}
+      />
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Navigation />
         <BasketTool
