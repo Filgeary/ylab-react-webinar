@@ -2,7 +2,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 20px;
+  padding: 22px 20px;
 }
 
 .Pagination-ellipsis {

@@ -3,6 +3,7 @@ import BasketTool from '../../components/basket-tool';
 import Head from '../../components/head';
 import Item from '../../components/item';
 import List from '../../components/list';
+import Navigation from '../../components/navigation';
 import PageLayout from '../../components/page-layout';
 import Pagination from '../../components/pagination';
 import useSelector from '../../store/use-selector';
@@ -50,11 +51,14 @@ function Main() {
   return (
     <PageLayout>
       <Head title='Магазин' />
-      <BasketTool
-        onOpen={callbacks.openModalBasket}
-        amount={select.amount}
-        sum={select.sum}
-      />
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Navigation />
+        <BasketTool
+          onOpen={callbacks.openModalBasket}
+          amount={select.amount}
+          sum={select.sum}
+        />
+      </div>
       <List
         list={select.list}
         renderItem={renders.item}

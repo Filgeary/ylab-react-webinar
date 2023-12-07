@@ -2,8 +2,10 @@
 .ItemBasket {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   transition: background-color 1s;
-  padding-left: 10px
+  padding-left: 10px;
+  margin-bottom: -2px;
 }
 
 .ItemBasket-code {
