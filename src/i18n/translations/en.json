@@ -18,5 +18,6 @@
   "user.login": "Login",
   "user.logout": "Logout",
   "user.profile": "Profile",
-  "user.toLogin": "To Login"
+  "user.toLogin": "To Login",
+  "user.successLogin": "Success login"
 }

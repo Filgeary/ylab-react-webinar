@@ -20,5 +20,6 @@
   "user.login": "Вход",
   "user.logout": "Выход",
   "user.profile": "Профиль",
-  "user.toLogin": "Войти"
+  "user.toLogin": "Войти",
+  "user.successLogin": "Вы успешно вошли в систему"
 }
