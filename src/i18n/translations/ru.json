@@ -16,5 +16,9 @@
     "few": "товара",
     "many": "товаров",
     "other": "товара"
-  }
+  },
+  "user.login": "Вход",
+  "user.logout": "Выход",
+  "user.profile": "Профиль",
+  "user.toLogin": "Войти"
 }
