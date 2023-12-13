@@ -33,3 +33,54 @@ export function codeGenerator(start = 0) {
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+function createTreeStructure(items) {
+  const tree = {};
+
+  items.forEach(item => {
+    const { _id, title, parent } = item;
+    const parentId = parent ? parent._id : null;
+
+    if (!tree[parentId]) {
+      tree[parentId] = [];
+    }
+
+    tree[parentId].push({ _id, title });
+  });
+
+  const buildTree = parentId => {
+    if (!tree[parentId]) {
+      return [];
+    }
+
+    return tree[parentId].map(item => ({
+      ...item,
+      children: buildTree(item._id),
+    }));
+  };
+
+  return buildTree(null);
+}
+
+function createFlatStructure(tree, initial = '', prefix = '- ') {
+  const result = [];
+
+  function walkTree(tree, initial = '') {
+    for (const node of tree) {
+      result.push({
+        value: node._id,
+        title: initial + node.title,
+      });
+
+      if (node.children) {
+        walkTree(node.children, initial + prefix);
+      }
+    }
+  }
+
+  walkTree(tree, initial);
+
+  return result;
+}
+
+export const createFlatCategories = data => createFlatStructure(createTreeStructure(data));
