@@ -5,12 +5,11 @@ import PageLayout from '../../components/page-layout';
 import LocaleSelect from '../../containers/locale-select';
 import Navigation from '../../containers/navigation';
 import UserPanel from '../../containers/user-panel';
-import useStore from '../../hooks/use-store';
+import { useAuth } from '../../hooks/use-auth';
 import useTranslate from '../../hooks/use-translate';
 
 function Login() {
-  const store = useStore();
-
+  const { isUserAuth, login, isPending, error, isSuccess } = useAuth();
   const { t } = useTranslate();
 
   return (
@@ -20,14 +19,19 @@ function Login() {
         <LocaleSelect />
       </Head>
       <Navigation />
-      <LoginForm
-        t={t}
-        title={t('user.login')}
-        onSubmit={console.log}
-        isSubmitting={false}
-        isSuccess={false}
-        error={{ message: 'Текст ошибки от сервера' }}
-      />
+
+      {!isUserAuth ? (
+        <LoginForm
+          t={t}
+          title={t('user.login')}
+          onSubmit={login}
+          isSubmitting={isPending}
+          isSuccess={isSuccess}
+          error={error}
+        />
+      ) : (
+        <h2 style={{ textAlign: 'center' }}>✅ {t('user.alreadyAuth')}</h2>
+      )}
     </PageLayout>
   );
 }

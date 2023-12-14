@@ -22,5 +22,6 @@
   "user.phone": "Phone",
   "user.toLogin": "To Login",
   "user.successLogin": "Success login",
-  "user.successLogout": "Success logout"
+  "user.successLogout": "Success logout",
+  "user.alreadyAuth": "You are already logged in"
 }

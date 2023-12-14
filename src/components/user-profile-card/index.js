@@ -12,10 +12,10 @@ const UserProfileCard = ({ user, title, t }) => {
 
       <div className={cn('info')}>
         <div className={cn('name')}>
-          {t('user.name')}: <strong>{user.name}</strong>
+          {t('user.name')}: <strong>{user.profile?.name}</strong>
         </div>
         <div className={cn('phone')}>
-          {t('user.phone')}: <strong>{user.phone}</strong>
+          {t('user.phone')}: <strong>{user.profile?.phone}</strong>
         </div>
         <div className={cn('email')}>
           email: <strong>{user.email}</strong>
@@ -27,9 +27,11 @@ const UserProfileCard = ({ user, title, t }) => {
 
 UserProfileCard.propTypes = {
   user: PropTypes.shape({
-    name: PropTypes.string,
-    phone: PropTypes.string,
     email: PropTypes.string,
+    profile: PropTypes.shape({
+      name: PropTypes.string,
+      phone: PropTypes.string,
+    }),
   }).isRequired,
   title: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,

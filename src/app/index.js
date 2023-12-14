@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import useSelector from '../hooks/use-selector';
+import RequireAuth from '../routing/require-auth';
 import Article from './article';
 import Basket from './basket';
 import Login from './login';
@@ -13,17 +14,6 @@ import Profile from './profile';
 function App() {
   const activeModal = useSelector(state => state.modals.name);
 
-  const select = useSelector(state => ({
-    user: state.user?.data,
-  }));
-
-  const isUserAuth =
-    Object.keys(
-      select.user ?? {
-        username: '',
-      },
-    ).length > 0;
-
   return (
     <>
       <Routes>
@@ -31,7 +21,14 @@ function App() {
         <Route path={'/articles/:id'} element={<Article />} />
         <Route path={'/login'} element={<Login />} />
 
-        {isUserAuth && <Route path={'/profile/:username'} element={<Profile />} />}
+        <Route
+          path={'/profile'}
+          element={
+            <RequireAuth>
+              <Profile />
+            </RequireAuth>
+          }
+        />
       </Routes>
 
       {activeModal === 'basket' && <Basket />}

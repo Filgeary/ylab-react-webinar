@@ -1,14 +1,19 @@
 import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import './style.css';
 
 const LoginForm = ({ title, onSubmit, isSubmitting, error, isSuccess, t }) => {
   const cn = bem('LoginForm');
   const [formState, setFormState] = useState({
-    username: '',
+    login: '',
     password: '',
   });
+
+  const usernameInputRef = useRef();
+  useEffect(() => {
+    usernameInputRef?.current?.focus();
+  }, []);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -22,7 +27,8 @@ const LoginForm = ({ title, onSubmit, isSubmitting, error, isSuccess, t }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      setFormState({ username: '', password: '' });
+      setFormState({ login: '', password: '' });
+      usernameInputRef?.current?.focus();
     }
   }, [isSuccess]);
 
@@ -32,17 +38,18 @@ const LoginForm = ({ title, onSubmit, isSubmitting, error, isSuccess, t }) => {
 
       <form onSubmit={handleSubmit} className={cn('form')}>
         <div className={cn('field')}>
-          <label htmlFor='username' className={cn('label')}>
+          <label htmlFor='login' className={cn('label')}>
             Логин
           </label>
           <input
+            ref={usernameInputRef}
             type='text'
-            id='username'
-            name='username'
+            id='login'
+            name='login'
             className={cn('input')}
             autoComplete='username'
             onChange={handleChange}
-            value={formState.username}
+            value={formState.login}
             required
           />
         </div>
@@ -81,8 +88,8 @@ LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
-  error: PropTypes.object.isRequired,
   isSuccess: PropTypes.bool.isRequired,
+  error: PropTypes.object,
 };
 
 export default memo(LoginForm);

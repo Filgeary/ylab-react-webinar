@@ -1,36 +1,28 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useSelector from '../../hooks/use-selector';
-import useStore from '../../hooks/use-store';
+import { useAuth } from '../../hooks/use-auth';
 import useTranslate from '../../hooks/use-translate';
 import './style.css';
 
 const UserPanel = () => {
+  const { isUserAuth, user, logout } = useAuth();
   const { t } = useTranslate();
   const navigate = useNavigate();
-  const store = useStore();
-
-  const select = useSelector(state => ({
-    user: state.user?.data,
-  }));
 
   const handleLogin = () => {
-    console.log('handleLogin');
     navigate('/login');
   };
 
   const handleLogout = () => {
-    console.log('handleLogout');
+    logout();
+    navigate('/');
   };
-
-  const { user = {} } = select;
-  const isUserAuth = Object.keys(user).length > 0;
 
   return (
     <div className='UserPanel'>
       {isUserAuth && (
-        <Link to={`/profile/${user.username}`} className='UserPanel-link'>
-          {user.username}
+        <Link to={'/profile'} className='UserPanel-link'>
+          {user.profile?.name}
         </Link>
       )}
 

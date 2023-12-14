@@ -84,3 +84,7 @@ function createFlatStructure(tree, initial = '', prefix = '- ') {
 }
 
 export const createFlatCategories = data => createFlatStructure(createTreeStructure(data));
+
+export function formatError(json) {
+  return json?.error?.message + ' --> ' + json?.error?.data?.issues?.[0]?.message;
+}
