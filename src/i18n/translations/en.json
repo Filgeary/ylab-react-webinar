@@ -18,6 +18,9 @@
   "user.login": "Login",
   "user.logout": "Logout",
   "user.profile": "Profile",
+  "user.name": "Name",
+  "user.phone": "Phone",
   "user.toLogin": "To Login",
-  "user.successLogin": "Success login"
+  "user.successLogin": "Success login",
+  "user.successLogout": "Success logout"
 }

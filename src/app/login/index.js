@@ -2,7 +2,6 @@ import { memo } from 'react';
 import Head from '../../components/head';
 import LoginForm from '../../components/login-form';
 import PageLayout from '../../components/page-layout';
-import Spinner from '../../components/spinner';
 import LocaleSelect from '../../containers/locale-select';
 import Navigation from '../../containers/navigation';
 import UserPanel from '../../containers/user-panel';
@@ -21,14 +20,14 @@ function Login() {
         <LocaleSelect />
       </Head>
       <Navigation />
-      <Spinner active={false}>
-        <LoginForm
-          title={t('user.login')}
-          onSubmit={console.log}
-          t={t}
-          error={{ message: 'Текст ошибки от сервера' }}
-        />
-      </Spinner>
+      <LoginForm
+        t={t}
+        title={t('user.login')}
+        onSubmit={console.log}
+        isSubmitting={false}
+        isSuccess={false}
+        error={{ message: 'Текст ошибки от сервера' }}
+      />
     </PageLayout>
   );
 }
