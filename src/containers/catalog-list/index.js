@@ -1,11 +1,11 @@
-import {memo, useCallback} from "react";
-import useStore from "../../hooks/use-store";
-import useSelector from "../../hooks/use-selector";
-import useTranslate from "../../hooks/use-translate";
-import Item from "../../components/item";
-import List from "../../components/list";
-import Pagination from "../../components/pagination";
-import Spinner from "../../components/spinner";
+import { memo, useCallback } from 'react';
+import Item from '../../components/item';
+import List from '../../components/list';
+import Pagination from '../../components/pagination';
+import Spinner from '../../components/spinner';
+import useSelector from '../../hooks/use-selector';
+import useStore from '../../hooks/use-store';
+import useTranslate from '../../hooks/use-translate';
 
 /**
  * Контейнер списка товаров с пагинацией
@@ -19,6 +19,7 @@ function CatalogList() {
     limit: state.catalog.params.limit,
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
+    category: state.catalog.params.category,
     count: state.catalog.count,
     waiting: state.catalog.waiting,
   }));
@@ -27,20 +28,22 @@ function CatalogList() {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Пагинация
-    onPaginate: useCallback(page => store.actions.catalog.setParams({page}), [store]),
+    onPaginate: useCallback(page => store.actions.catalog.setParams({ page }), [store]),
     // Генератор ссылки для пагинатора
+    // prettier-ignore
     makePaginatorLink: useCallback((page) => {
       return `?${new URLSearchParams({
         page,
         limit: select.limit,
         sort: select.sort,
-        query: select.query
+        query: select.query,
+        category: select.category,
       })}`;
-    }, [select.limit, select.sort, select.query])
-  }
+    }, [select.limit, select.sort, select.query, select.category]),
+  };
 
-  const {t} = useTranslate();
-
+  const { t } = useTranslate();
+  // prettier-ignore
   const renders = {
     item: useCallback(item => (
       <Item item={item} onAdd={callbacks.addToBasket} link={`/articles/${item._id}`}
@@ -50,9 +53,14 @@ function CatalogList() {
 
   return (
     <Spinner active={select.waiting}>
-      <List list={select.list} renderItem={renders.item}/>
-      <Pagination count={select.count} page={select.page} limit={select.limit}
-                  onChange={callbacks.onPaginate} makeLink={callbacks.makePaginatorLink}/>
+      <List list={select.list} renderItem={renders.item} />
+      <Pagination
+        count={select.count}
+        page={select.page}
+        limit={select.limit}
+        onChange={callbacks.onPaginate}
+        makeLink={callbacks.makePaginatorLink}
+      />
     </Spinner>
   );
 }
