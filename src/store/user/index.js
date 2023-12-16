@@ -40,8 +40,20 @@ class UserState extends StoreModule {
         },
         credentials: 'same-origin',
       });
-
       const json = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem('token');
+          this.setState(
+            {
+              ...this.initState(),
+            },
+            'Ошибка при загрузке пользователя с невалидным токеном',
+          );
+        }
+        throw new Error(formatError(json) || 'Неизвестная ошибка');
+      }
 
       this.setState(
         {
@@ -62,6 +74,10 @@ class UserState extends StoreModule {
         },
         'Ошибка при загрузке пользователя',
       );
+    } finally {
+      setTimeout(() => {
+        this.clearAllErrors();
+      }, 3000);
     }
   }
 
@@ -111,6 +127,10 @@ class UserState extends StoreModule {
         },
         'Ошибка при авторизации',
       );
+    } finally {
+      setTimeout(() => {
+        this.clearAllErrors();
+      }, 3000);
     }
   }
 
@@ -134,8 +154,20 @@ class UserState extends StoreModule {
         },
         credentials: 'same-origin',
       });
-
       const json = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem('token');
+          this.setState(
+            {
+              ...this.initState(),
+            },
+            'Ошибка при выходе с невалидным токеном',
+          );
+        }
+        throw new Error(formatError(json) || 'Неизвестная ошибка');
+      }
 
       this.setState(
         {
@@ -156,7 +188,21 @@ class UserState extends StoreModule {
         },
         'Ошибка при выходе',
       );
+    } finally {
+      setTimeout(() => {
+        this.clearAllErrors();
+      }, 3000);
     }
+  }
+
+  clearAllErrors() {
+    this.setState(
+      {
+        ...this.getState(),
+        error: null,
+      },
+      'Очистка всех ошибок',
+    );
   }
 }
 

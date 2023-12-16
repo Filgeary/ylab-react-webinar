@@ -20,9 +20,9 @@ const UserPanel = () => {
 
   return (
     <div className='UserPanel'>
-      {isUserAuth && (
+      {isUserAuth && Object.keys(user ?? {}).length > 0 && (
         <Link to={'/profile'} className='UserPanel-link'>
-          {user.profile?.name}
+          {user?.profile?.name}
         </Link>
       )}
 
