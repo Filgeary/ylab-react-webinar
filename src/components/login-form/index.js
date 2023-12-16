@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { memo, useEffect, useRef, useState } from 'react';
 import './style.css';
 
-const LoginForm = ({ title, onSubmit, isSubmitting, error, isSuccess, t }) => {
+const LoginForm = ({ title, onSubmit, isSubmitting, error, isSuccess, onLoginSuccess, t }) => {
   const cn = bem('LoginForm');
   const [formState, setFormState] = useState({
     login: '',
@@ -28,9 +28,9 @@ const LoginForm = ({ title, onSubmit, isSubmitting, error, isSuccess, t }) => {
   useEffect(() => {
     if (isSuccess) {
       setFormState({ login: '', password: '' });
-      usernameInputRef?.current?.focus();
+      onLoginSuccess();
     }
-  }, [isSuccess]);
+  }, [isSuccess, onLoginSuccess]);
 
   return (
     <section className={cn()}>
@@ -89,6 +89,7 @@ LoginForm.propTypes = {
   t: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
   isSuccess: PropTypes.bool.isRequired,
+  onLoginSuccess: PropTypes.func.isRequired,
   error: PropTypes.object,
 };
 

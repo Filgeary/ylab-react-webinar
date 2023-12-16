@@ -16,6 +16,7 @@ export const useAuth = () => {
     isPending: state.user?.isPending,
     error: state.user?.error,
     isSuccess: state.user?.isSuccess,
+    isInitialAuth: state.user?.isInitialAuth,
   }));
 
   const callbacks = {
@@ -31,6 +32,7 @@ export const useAuth = () => {
     isSuccess: select.isSuccess,
     login: callbacks.login,
     logout: callbacks.logout,
-    isUserAuth: Object.keys(select.user ?? {}).length > 0 || Boolean(localStorage.getItem('token')),
+    isUserAuth: Boolean(select.token),
+    isInitialAuth: select.isInitialAuth,
   };
 };

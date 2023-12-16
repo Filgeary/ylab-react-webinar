@@ -1,4 +1,5 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Head from '../../components/head';
 import LoginForm from '../../components/login-form';
 import PageLayout from '../../components/page-layout';
@@ -9,8 +10,11 @@ import { useAuth } from '../../hooks/use-auth';
 import useTranslate from '../../hooks/use-translate';
 
 function Login() {
-  const { isUserAuth, login, isPending, error, isSuccess } = useAuth();
+  const { login, isPending, error, isSuccess } = useAuth();
   const { t } = useTranslate();
+  const navigate = useNavigate();
+
+  const handleLoginSuccess = useCallback(() => navigate('/profile', { replace: true }), [navigate]);
 
   return (
     <PageLayout>
@@ -20,18 +24,15 @@ function Login() {
       </Head>
       <Navigation />
 
-      {!isUserAuth ? (
-        <LoginForm
-          t={t}
-          title={t('user.login')}
-          onSubmit={login}
-          isSubmitting={isPending}
-          isSuccess={isSuccess}
-          error={error}
-        />
-      ) : (
-        <h2 style={{ textAlign: 'center' }}>✅ {t('user.alreadyAuth')}</h2>
-      )}
+      <LoginForm
+        t={t}
+        title={t('user.login')}
+        onSubmit={login}
+        isSubmitting={isPending}
+        isSuccess={isSuccess}
+        onLoginSuccess={handleLoginSuccess}
+        error={error}
+      />
     </PageLayout>
   );
 }

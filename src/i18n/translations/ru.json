@@ -25,5 +25,5 @@
   "user.toLogin": "Войти",
   "user.successLogin": "Вы успешно вошли в систему",
   "user.successLogout": "Вы вышли из системы",
-  "user.alreadyAuth": "Вы уже вошли в систему"
+  "user.loginInProgress": "Вход в систему..."
 }

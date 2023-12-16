@@ -10,6 +10,7 @@ class UserState extends StoreModule {
       error: null,
       isSuccess: false,
       isLogout: false,
+      isInitialAuth: true,
     };
   }
 
@@ -28,6 +29,7 @@ class UserState extends StoreModule {
         isPending: true,
         error: null,
         isSuccess: false,
+        isInitialAuth: true,
       },
       'Установка статуса загрузки пользователя',
     );
@@ -63,6 +65,7 @@ class UserState extends StoreModule {
           isPending: false,
           error: null,
           isSuccess: true,
+          isInitialAuth: false,
         },
         'Загрузка пользователя прошла успешно',
       );
