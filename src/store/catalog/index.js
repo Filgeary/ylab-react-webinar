@@ -113,18 +113,10 @@ class CatalogState extends StoreModule {
         ...this.getState(),
         list: articles.result.items,
         count: articles.result.count,
-        waiting: false,
-      },
-      'Загружен список товаров из АПИ',
-    );
-
-    this.setState(
-      {
-        ...this.getState(),
         categories: createFlatCategories(categories.result.items),
         waiting: false,
       },
-      'Загружен список категорий из АПИ',
+      'Загружен список товаров и категорий из АПИ',
     );
   }
 }
