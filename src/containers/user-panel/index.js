@@ -1,34 +1,32 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserPanelView from '../../components/user-panel-view';
 import { useAuth } from '../../hooks/use-auth';
 import useTranslate from '../../hooks/use-translate';
-import './style.css';
 
 const UserPanel = () => {
   const { isUserAuth, user, logout } = useAuth();
   const { t } = useTranslate();
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     navigate('/login');
-  };
+  }, [navigate]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout();
     navigate('/');
-  };
+  }, [logout, navigate]);
 
   return (
-    <div className='UserPanel'>
-      {isUserAuth && Object.keys(user ?? {}).length > 0 && (
-        <Link to={'/profile'} className='UserPanel-link'>
-          {user?.profile?.name}
-        </Link>
-      )}
-
-      {isUserAuth && <button onClick={handleLogout}>{t('user.logout')}</button>}
-      {!isUserAuth && <button onClick={handleLogin}>{t('user.login')}</button>}
-    </div>
+    <UserPanelView
+      isUserAuth={isUserAuth}
+      user={user}
+      onLogin={handleLogin}
+      onLogout={handleLogout}
+      linkToProfile='/profile'
+      t={t}
+    />
   );
 };
 

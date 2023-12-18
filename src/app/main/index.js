@@ -19,6 +19,7 @@ function Main() {
   // prettier-ignore
   useInit(() => {
     store.actions.catalog.initParams();
+    store.actions.categories.loadCategories();
   }, [], true);
 
   const { t } = useTranslate();

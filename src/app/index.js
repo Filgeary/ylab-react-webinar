@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { useAuth } from '../hooks/use-auth';
 import useSelector from '../hooks/use-selector';
 import RequireAuth from '../routing/require-auth';
 import Article from './article';
@@ -12,6 +13,7 @@ import Profile from './profile';
  * Маршрутизация по страницам и модалкам
  */
 function App() {
+  useAuth();
   const activeModal = useSelector(state => state.modals.name);
 
   return (

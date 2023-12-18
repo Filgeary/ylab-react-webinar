@@ -3,13 +3,15 @@ import { Navigate, useLocation } from 'react-router-dom';
 import Loader from '../../components/loader';
 import { useAuth } from '../../hooks/use-auth';
 import useTranslate from '../../hooks/use-translate';
+import { storage } from '../../utils';
 
 function RequireAuth({ children }) {
   const { isUserAuth, isInitialAuth, error } = useAuth();
   const location = useLocation();
   const { t } = useTranslate();
+  const localToken = storage.getToken();
 
-  if (isInitialAuth && !error) {
+  if (localToken && isInitialAuth && !error) {
     return <Loader title={t('user.loginInProgress')} />;
   }
 

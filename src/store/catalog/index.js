@@ -1,4 +1,3 @@
-import { createFlatCategories } from '../../utils';
 import StoreModule from '../module';
 
 /**
@@ -20,7 +19,6 @@ class CatalogState extends StoreModule {
         category: '',
       },
       count: 0,
-      categories: [],
       waiting: false,
     };
   }
@@ -95,29 +93,29 @@ class CatalogState extends StoreModule {
       apiParams['search[category]'] = params.category;
     }
 
-    // TODO: move fetch fns to api, services, etc
-    async function fetchArticles() {
-      const articles = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
-      return await articles.json();
+    try {
+      const res = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
+      const articles = await res.json();
+
+      this.setState(
+        {
+          ...this.getState(),
+          list: articles.result.items,
+          count: articles.result.count,
+          waiting: false,
+        },
+        'Загружен список товаров из АПИ',
+      );
+    } catch (err) {
+      this.setState(
+        {
+          ...this.getState(),
+          waiting: false,
+          error: err,
+        },
+        'Ошибка при загрузке списка товаров',
+      );
     }
-
-    async function fetchCategories() {
-      const categories = await fetch('/api/v1/categories?fields=_id,title,parent(_id)&limit=*');
-      return await categories.json();
-    }
-
-    const [articles, categories] = await Promise.all([fetchArticles(), fetchCategories()]);
-
-    this.setState(
-      {
-        ...this.getState(),
-        list: articles.result.items,
-        count: articles.result.count,
-        categories: createFlatCategories(categories.result.items),
-        waiting: false,
-      },
-      'Загружен список товаров и категорий из АПИ',
-    );
   }
 }
 

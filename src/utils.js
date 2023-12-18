@@ -86,5 +86,18 @@ function createFlatStructure(tree, initial = '', prefix = '- ') {
 export const createFlatCategories = data => createFlatStructure(createTreeStructure(data));
 
 export function formatError(json) {
-  return json?.error?.message + ' --> ' + json?.error?.data?.issues?.[0]?.message;
+  if (!json) return 'Неизвестная ошибка';
+  return json?.error?.data?.issues?.[0]?.message || json?.error?.message;
 }
+
+export const storage = {
+  getToken: () => {
+    return window.localStorage.getItem('token');
+  },
+  setToken: token => {
+    window.localStorage.setItem('token', token);
+  },
+  clearToken: () => {
+    window.localStorage.removeItem('token');
+  },
+};

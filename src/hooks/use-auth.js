@@ -5,23 +5,23 @@ import useStore from '../hooks/use-store';
 export const useAuth = () => {
   const store = useStore();
 
+  const select = useSelector(state => ({
+    user: state.auth?.data,
+    token: state.auth?.token,
+    isPending: state.auth?.isPending,
+    error: state.auth?.error,
+    isSuccess: state.auth?.isSuccess,
+    isInitialAuth: state.auth?.isInitialAuth,
+  }));
+
   useEffect(() => {
-    store.actions.user.loadUser();
+    store.actions.auth.authMe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const select = useSelector(state => ({
-    user: state.user?.data,
-    token: state.user?.token,
-    isPending: state.user?.isPending,
-    error: state.user?.error,
-    isSuccess: state.user?.isSuccess,
-    isInitialAuth: state.user?.isInitialAuth,
-  }));
-
   const callbacks = {
-    login: useCallback(data => store.actions.user.login(data), [store]),
-    logout: useCallback(() => store.actions.user.logout(), [store]),
+    login: useCallback(data => store.actions.auth.login(data), [store]),
+    logout: useCallback(() => store.actions.auth.logout(), [store]),
   };
 
   return {
@@ -32,7 +32,7 @@ export const useAuth = () => {
     isSuccess: select.isSuccess,
     login: callbacks.login,
     logout: callbacks.logout,
-    isUserAuth: Boolean(select.token),
+    isUserAuth: Boolean(select.token) || Object.keys(select.user ?? {}).length > 0,
     isInitialAuth: select.isInitialAuth,
   };
 };
