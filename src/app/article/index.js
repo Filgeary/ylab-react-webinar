@@ -48,7 +48,7 @@ function Article() {
     user: state.session.user
   }))
 
-  const {t} = useTranslate();
+  const {lang, t} = useTranslate();
 
   const callbacks = {
     // Добавление в корзину
@@ -78,7 +78,7 @@ function Article() {
   }, [selectRedux.comments.items]);
 
   return (
-    <PageLayout>
+    <PageLayout key={lang}>
       <TopHead/>
       <Head title={selectRedux.article.title}>
         <LocaleSelect/>
