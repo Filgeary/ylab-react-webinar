@@ -1,25 +1,26 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useSyncExternalStore } from 'react';
 import useServices from './use-services';
 
 /**
  * Хук возвращает функцию для локализации текстов, код языка и функцию его смены
  */
 export default function useTranslate() {
-  const { lang: langService, setLang, t } = useServices().i18n
-  const navigate = useNavigate();
-  const location = useLocation();
+  const i18nService = useServices().i18n
+  const apiService = useServices().api
 
-  const [value, setValue] = useState(() => langService);
+  const unsubscribe = useMemo(() => {
+    return i18nService.subscribe((state) => {
+      apiService.setHeader('Accept-Language', state)
+    });
+  }, []);
 
-  useEffect(() => {
-    setValue(langService);
-    navigate(location.pathname, {replace: true});
-  }, [langService]);
+  useEffect(() => unsubscribe, [unsubscribe]);
+
+  const state = useSyncExternalStore(i18nService.subscribe, i18nService.getState);
 
   return {
-    lang: value,
-    setLang,
-    t
+    lang: state,
+    setLang: i18nService.setLang,
+    t: i18nService.t
   };
 }

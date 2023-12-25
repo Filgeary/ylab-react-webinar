@@ -1,9 +1,6 @@
 export const initialState = {
   data: {},
   waiting: false,
-  postedCommentData: {},
-  postedCommentWaiting: false,
-  postedCommentSuccess: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,25 +17,22 @@ const reducer = (state = initialState, action) => {
     case "comments/add-start":
       return {
         ...state,
-        postedCommentData: {},
-        postedCommentWaiting: true,
-        postedCommentSuccess: false,
+        waiting: true,
       };
 
     case "comments/add-success":
       return {
         ...state,
-        postedCommentData: action.payload.data,
-        postedCommentWaiting: false,
-        postedCommentSuccess: true,
+        data: {
+          items: [...state.data.items, action.payload.data],
+        },
+        waiting: false,
       };
 
     case "comments/add-error":
       return {
         ...state,
-        postedCommentData: {},
-        postedCommentWaiting: false,
-        postedCommentSuccess: false,
+        waiting: false,
       };
 
     default:

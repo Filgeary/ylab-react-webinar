@@ -13,15 +13,14 @@ import useTranslate from '../../hooks/use-translate';
 function Main() {
 
   const store = useStore();
+  const {lang, t} = useTranslate();
 
   useInit(async () => {
     await Promise.all([
       store.actions.catalog.initParams(),
       store.actions.categories.load()
     ]);
-  }, [], true);
-
-  const {lang, t} = useTranslate();
+  }, [lang], true);
 
   return (
     <PageLayout key={lang}>

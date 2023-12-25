@@ -5,7 +5,7 @@ import formatDate from "../../utils/format-date";
 import "./style.css";
 
 const CommentItem = ({
-  author,
+  authorName,
   text,
   dateCreate,
   onReply,
@@ -21,7 +21,7 @@ const CommentItem = ({
         <span
           className={cn("user-name", { "current-user": isAuthorByCurrentUser })}
         >
-          {author?.profile?.name}
+          {authorName}
         </span>
         <span className={cn("date")}>{formatDate(dateCreate)}</span>
       </div>
@@ -35,7 +35,7 @@ const CommentItem = ({
 };
 
 CommentItem.propTypes = {
-  author: PropTypes.object.isRequired,
+  authorName: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   dateCreate: PropTypes.string.isRequired,
   onReply: PropTypes.func.isRequired,

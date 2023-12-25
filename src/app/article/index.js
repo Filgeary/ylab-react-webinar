@@ -1,4 +1,4 @@
-import { memo, useCallback, useLayoutEffect, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector as useStoreRedux } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import shallowequal from 'shallowequal';
@@ -21,6 +21,7 @@ import treeToList from '../../utils/tree-to-list';
 
 function Article() {
   const store = useStore();
+  const {lang, t} = useTranslate();
 
   const dispatch = useDispatch();
   // Параметры из пути /articles/:id
@@ -31,24 +32,19 @@ function Article() {
     //store.actions.article.load(params.id);
     dispatch(articleActions.load(params.id));
     dispatch(commentsActions.load(params.id));
-  }, [params.id]);
+  }, [lang, params.id]);
 
   const selectRedux = useStoreRedux(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
     comments: state.comments.data,
     waitingComments: state.comments.waiting,
-    postedCommentData: state.comments.postedCommentData,
-    postedCommentWaiting: state.comments.postedCommentWaiting,
-    postedCommentSuccess: state.comments.postedCommentSuccess
   }), shallowequal); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
 
   const select = useSelector(state => ({
     exists: state.session.exists,
     user: state.session.user
   }))
-
-  const {lang, t} = useTranslate();
 
   const callbacks = {
     // Добавление в корзину
@@ -57,12 +53,6 @@ function Article() {
       dispatch(commentsActions.add(text, id || params.id, id ? 'comment' : 'article'));
     }, [dispatch, params.id])
   }
-
-  useLayoutEffect(() => {
-    if (selectRedux.postedCommentSuccess) {
-      dispatch(commentsActions.load(params.id));
-    }
-  }, [selectRedux.postedCommentSuccess, params.id]);
 
   const mappedComments = useMemo(() => {
     return treeToList(
@@ -92,7 +82,7 @@ function Article() {
           comments={mappedComments}
           onSubmit={callbacks.addComment}
           isUserAuth={select.exists}
-          currentUserId={select.user?._id ?? ''}
+          currentUser={select.user}
           pathToLogin={'/login'}
           t={t}
         />
