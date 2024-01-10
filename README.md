@@ -6,7 +6,7 @@
 >
 > Результат: Попал в шорт-лист из 17 чел. на тех-собес 😄
 >
-> TODO: добавить сертификат
+> [сертификат](https://www.dropbox.com/scl/fi/rwpiwnvuemtyb1rqbof75/Ylab-React-2023-..pdf?rlkey=lxy2nk1cb0w7hzcmgdjomg9vj&dl=0)
 
 ## Features
 
